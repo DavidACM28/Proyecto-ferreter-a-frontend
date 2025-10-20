@@ -1,0 +1,76 @@
+:root{
+  --ink:#0f0f12;
+  --muted:#8b8f98;
+  --line:#ececf1;
+  --panel:#ffffff;
+
+  --radius:18px;
+  --shadow:0 20px 40px rgba(0,0,0,.08);
+  --shadow-soft:0 10px 25px rgba(0,0,0,.06);
+  --black:#111;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0; font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif; color:var(--ink); background:#fff}
+
+
+.login-split{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns: 1.05fr 0.95fr;
+}
+
+
+.login-left{
+  background:#fff;
+  display:flex; flex-direction:column;
+  padding:32px clamp(24px,4vw,56px);
+}
+.brand{height:56px; display:flex; align-items:center; gap:10px}
+.brand-dot{width:9px; height:9px; background:#111; border-radius:999px; display:inline-block}
+.brand-text{font-weight:700; letter-spacing:.02em}
+
+.panel{max-width:520px; margin-top:24px}
+.title{font-size:44px; line-height:1.05; letter-spacing:-.02em; margin:0 0 12px}
+.title-strong{font-weight:800}
+.subtitle{color:var(--muted); margin:0 0 22px}
+
+.form{display:flex; flex-direction:column; gap:12px}
+.label{font-weight:600; margin-top:6px}
+.req{color:#ff5a3a}
+
+.input{
+  width:100%; border:1px solid var(--line); border-radius:14px;
+  padding:14px 16px; background:#fff; outline:none;
+  transition:box-shadow .15s ease,border-color .15s ease;
+}
+.input::placeholder{color:#a7abb3}
+.input:focus{border-color:#d7d9e0; box-shadow:0 0 0 4px rgba(17,17,17,.05)}
+
+.row{display:flex; align-items:center; justify-content:space-between; margin-top:4px}
+.check{display:flex; align-items:center; gap:10px; color:#333}
+.check input{width:16px; height:16px; accent-color:#111}
+.link{color:#222; text-decoration:none; font-weight:600}
+.link:hover{text-decoration:underline}
+
+.btn-primary{
+  margin-top:6px; width:100%;
+  background:#111; color:#fff; border:0; border-radius:14px;
+  padding:14px 16px; font-weight:800; letter-spacing:.01em; cursor:pointer;
+  box-shadow:var(--shadow-soft);
+}
+.btn-primary:hover{opacity:.96}
+.btn-primary:active{transform:translateY(1px)}
+
+
+.login-right{
+  background: #DCCE40;
+}
+/* Responsive */
+@media (max-width:1080px){
+  .login-split{grid-template-columns:1fr}
+  .login-right{display:none}
+  .panel{max-width:560px}
+  .title{font-size:40px}
+}

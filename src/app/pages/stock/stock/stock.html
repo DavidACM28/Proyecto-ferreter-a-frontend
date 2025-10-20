@@ -1,0 +1,208 @@
+<div class="stock-container">
+  <!-- 🧩 Filtros -->
+  <div class="filtros-card">
+    <div class="filtros-grid centrado">
+      <div class="filtro-item">
+        <label for="s-buscar">Buscar producto</label>
+        <input id="s-buscar" [(ngModel)]="busqueda" type="text" placeholder="Martillo, taladro, tornillos…">
+      </div>
+
+      <div class="filtro-item">
+        <label for="s-categoria">Categoría</label>
+        <select [(ngModel)]="categoriaSeleccionada" id="s-categoria" >
+          <option>Todas las categorías</option>
+          <option *ngFor="let cat of categorias" value="{{cat.nombreCategoria}}">{{cat.nombreCategoria}}</option>
+        </select>
+      </div>
+
+      <div class="filtro-item">
+        <label for="s-estado">Estado</label>
+        <select id="s-estado" [(ngModel)]="estado">
+          <option value="Todos">Todos</option>
+          <option value="stock bajo">Stock bajo</option>
+          <option value="sin stock">Sin stock</option>
+          <option value="activo">Activo</option>
+          <option value="inactivo">Inactivo</option>
+        </select>
+      </div>
+
+      <div class="filtro-item">
+        <label for="s-orden">Ordenar por</label>
+        <select id="s-orden" [(ngModel)]="orden">
+          <option value="id">Código</option>
+          <option value="nombre">Nombre</option>
+          <option value="stock">Stock</option>
+          <option value="precio">Precio</option>
+        </select>
+      </div>
+
+      <div class="filtro-botones">
+        <button class="btn-filtrar" type="button" (click)="filtrarProductos()">Filtrar</button>
+        <button class="btn-limpiar" type="button" (click)="limpiarFiltros()">Limpiar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 💰 Resumen -->
+  <section class="resumen-grid">
+    <div class="resumen-card">
+      <h3>Productos</h3>
+      <p class="monto">{{productosFiltrados.length}}</p>
+    </div>
+    <div class="resumen-card">
+      <h3>Unidades en almacén</h3>
+      <p class="monto">{{unidadesEnAlmacen}}</p>
+    </div>
+    <div class="resumen-card">
+      <h3>Alertas</h3>
+      <p class="badges">
+        <span class="estado bajo">Bajo: {{totalUnidadesStockBajo}}</span>
+        <span class="estado sin">Sin stock: {{totalUnidadesStockSin}}</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- 📋 Inventario -->
+  <div class="tabla-card">
+    <h2>Inventario</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Producto</th>
+          <th>Categoría</th>
+          <th class="num">Stock</th>
+          <th class="num">Mín.</th>
+          <th class="num">Precio</th>
+          <th class style="text-align: center;">Estado</th>
+          <th class="acciones">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let prod of productosFiltrados">
+          <td>{{prod.idProducto}}</td>
+          <td>{{prod.nombreProducto}}</td>
+          <td>{{prod.categoria!.nombreCategoria}}</td>
+          <td class="num">{{prod.cantidadProducto}}</td>
+          <td class="num">10</td>
+          <td class="num"> S/.{{prod.precioProducto}}</td>
+          <td *ngIf="prod.cantidadProducto! > 10" style="text-align: center;">
+            <span class="estado ok">Activo</span>
+          </td>
+          <td *ngIf="prod.cantidadProducto! < 10 && prod.cantidadProducto! > 0">
+            <span class="estado bajo">Bajo</span>
+          </td>
+          <td *ngIf="prod.cantidadProducto! == 0">
+            <span class="estado sin">Sin stock</span>
+          </td>
+          <td class="acciones">
+            <button
+              type="button"
+              (click)="abrirModal(prod, 'ver')"
+              class="bg-gray-100 text-gray-800 px-3 py-1 rounded-md hover:bg-gray-200 transition font-medium">
+              Ver
+            </button>
+
+            <button
+              type="button"
+              (click)="abrirModal(prod, 'editar')"
+              class="bg-black text-white px-3 py-1 rounded-md hover:bg-gray-800 transition font-medium">
+              Editar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 📦 Modal Ver/Editar Producto -->
+<div
+  *ngIf="mostrarModal"
+  class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50"
+  (click)="cerrarModal()"
+>
+  <div 
+    class="bg-white rounded-2xl shadow-lg w-full max-w-md p-6 relative animate-fade-in" 
+    (click)="$event.stopPropagation()"
+  >
+    <!-- Título -->
+    <h2 class="text-xl font-semibold text-center mb-4">
+      {{ modoEdicion ? 'Editar Producto' : 'Detalle del Producto' }}
+    </h2>
+
+    <!-- Campos -->
+    <div class="flex flex-col gap-3">
+      <div>
+        <label class="block text-sm font-medium text-gray-600 mb-1">Nombre del producto</label>
+        <input type="text" [value]="productoSeleccionado?.nombreProducto" 
+               class="w-full border border-gray-300 rounded-lg p-2 bg-gray-100" readonly>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-600 mb-1">Descripción</label>
+        <textarea [value]="productoSeleccionado?.descripcionProducto" 
+                  class="w-full border border-gray-300 rounded-lg p-2 bg-gray-100 resize-none" rows="3" readonly></textarea>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-600 mb-1">Precio</label>
+        <input type="text" [value]="'S/. ' + productoSeleccionado?.precioProducto" 
+               class="w-full border border-gray-300 rounded-lg p-2 bg-gray-100" readonly>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-600 mb-1">Stock disponible</label>
+        <input 
+          type="number" 
+          [(ngModel)]="stockNuevo" 
+          [readonly]="!modoEdicion"
+          class="w-full border border-gray-300 rounded-lg p-2" 
+          [ngClass]="{
+            'bg-gray-100': !modoEdicion,
+            'bg-white': modoEdicion
+          }"
+        >
+      </div>
+      <div *ngIf="compararStock()">
+        <label class="block text-sm font-medium text-gray-600 mb-1">Razon de cambio de stock</label>
+        <input 
+          type="text" 
+          [(ngModel)]="razonDeCambio" 
+          class="w-full border border-gray-300 rounded-lg p-2" 
+          [ngClass]="{
+            'bg-gray-100': !modoEdicion,
+            'bg-white': modoEdicion
+          }"
+        >
+      </div>
+
+    </div>
+
+    <!-- Botones -->
+    <div class="mt-6 flex justify-center gap-3">
+      <button 
+        *ngIf="!modoEdicion"
+        type="button" 
+        (click)="cerrarModal()"
+        class="bg-gray-800 text-white px-5 py-2 rounded-lg hover:bg-gray-900 transition">
+        Cerrar
+      </button>
+
+      <ng-container *ngIf="modoEdicion">
+        <button 
+          type="button" 
+          (click)="guardarCambios()"
+          class="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 transition">
+          Guardar
+        </button>
+        <button 
+          type="button" 
+          (click)="cerrarModal()"
+          class="bg-gray-500 text-white px-5 py-2 rounded-lg hover:bg-gray-600 transition">
+          Cancelar
+        </button>
+      </ng-container>
+    </div>
+  </div>
+</div>

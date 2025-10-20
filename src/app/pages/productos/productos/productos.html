@@ -1,0 +1,102 @@
+<div class="registros-container productos-container">
+
+  <!-- 🅰️ Buscador + Nuevo Producto (card igual a filtros-card) -->
+  <div class="filtros-card productos-top">
+    <div class="productos-top__grid">
+      <!-- Buscador con contador total -->
+      <div class="buscador">
+        <label for="buscarProductos">Buscar producto</label>
+        <div class="buscador__wrap">
+          <span class="buscador__icon material-symbols-rounded" aria-hidden="true">search</span>
+          <input
+            id="buscarProductos"
+            type="text"
+            [(ngModel)]="busqueda"
+            (input)="buscarProducto()"
+            placeholder="Nombre de producto…"
+          />
+          <span class="total-badge">{{ total }}</span>
+        </div>
+      </div>
+
+      <!-- Botón Nuevo Producto -->
+      <div class="nuevo">
+        <button
+          (click)="nuevoProducto()"
+          class="btn-nuevo"
+          type="button">
+          Nuevo Producto
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🅱️ Categorías (chips) -->
+<div class="filtros-card chips-card">
+  <div class="chips">
+    <!-- Chip "Todos" -->
+    <button
+      (click)="seleccionarCategoria('Todos')"
+      [ngClass]="categoriaSeleccionada === 'Todos' ? 'chip chip--activa' : 'chip'">
+      Todos
+    </button>
+
+    <!-- Chips dinámicas -->
+    <button
+      *ngFor="let cat of categorias"
+      (click)="seleccionarCategoria(cat.nombreCategoria)"
+      [ngClass]="cat.nombreCategoria === categoriaSeleccionada ? 'chip chip--activa' : 'chip'">
+      {{ cat.nombreCategoria }}
+    </button>
+  </div>
+</div>
+
+
+  <!-- 📋 Tabla de productos -->
+  <div class="tabla-card">
+    <h2>Listado de productos</h2>
+    <table>
+      <thead>
+        <tr>
+          <th >Código</th>
+          <th>Nombre</th>
+          <th>Categoría</th>
+          <th>Precio (S/)</th>
+          <th>Stock</th>
+          <th class="acciones">Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of productosFiltrados">
+          <td>{{ producto.idProducto }}</td>
+          <td>{{ producto.nombreProducto }}</td>
+          <td>{{ producto.categoria!.nombreCategoria }}</td>
+          <td>S/{{ producto.precioProducto }}</td>
+          <td>{{ producto.cantidadProducto }}</td>
+          <td class="acciones">
+            <button
+              (click)="editarProducto(producto)"
+              type="button"
+              class="btn-editar">
+              Editar
+            </button>
+          </td>
+        </tr>
+
+        <tr *ngIf="productosFiltrados.length === 0">
+          <td colspan="6" class="no-resultados">No se encontraron productos.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<app-producto-modal
+  *ngIf="mostrarModal"
+  [producto]="productoEditar"
+  (onGuardar)="guardarProducto()"
+  (onCrear)="crearProducto()"
+  (onCancelar)="cancelarModal()"
+  (onEliminar)="eliminarProducto($event)">
+</app-producto-modal>

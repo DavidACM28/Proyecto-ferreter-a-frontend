@@ -1,0 +1,54 @@
+<aside class="w-64 bg-white shadow-md flex flex-col h-screen fixed">
+    <!-- Logo -->
+    <div class="h-16 flex items-center justify-center border-b">
+        <h1 class="text-xl font-bold text-blue-600">Mi Sistema</h1>
+    </div>
+
+    <!-- Menú -->
+    <nav class="flex-1 p-4">
+        <ul class="space-y-2">
+        <li>
+            <a routerLink="/dashboard" routerLinkActive="bg-blue-100 text-blue-600"
+            class="flex items-center gap-3 p-2 rounded-lg hover:bg-blue-50 text-gray-700">
+            <i class="lucide lucide-home"></i> <span>Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a routerLink="/ventas" routerLinkActive="bg-blue-100 text-blue-600"
+            class="flex items-center gap-3 p-2 rounded-lg hover:bg-blue-50 text-gray-700">
+            <i class="lucide lucide-shopping-cart"></i> <span>Ventas</span>
+            </a>
+        </li>
+        <li>
+            <a routerLink="/productos" routerLinkActive="bg-blue-100 text-blue-600"
+            class="flex items-center gap-3 p-2 rounded-lg hover:bg-blue-50 text-gray-700">
+            <i class="lucide lucide-box"></i> <span>Productos</span>
+            </a>
+        </li>
+        <li>
+            <a routerLink="/stock" routerLinkActive="bg-blue-100 text-blue-600"
+            class="flex items-center gap-3 p-2 rounded-lg hover:bg-blue-50 text-gray-700">
+            <i class="lucide lucide-archive"></i> <span>Stock</span>
+            </a>
+        </li>
+        <li>
+            <a routerLink="/movimientos" routerLinkActive="bg-blue-100 text-blue-600"
+            class="flex items-center gap-3 p-2 rounded-lg hover:bg-blue-50 text-gray-700">
+            <i class="lucide lucide-repeat"></i> <span>Movimientos</span>
+            </a>
+        </li>
+        <li>
+            <a routerLink="/reportes" routerLinkActive="bg-blue-100 text-blue-600"
+            class="flex items-center gap-3 p-2 rounded-lg hover:bg-blue-50 text-gray-700">
+            <i class="lucide lucide-bar-chart-3"></i> <span>Reportes</span>
+            </a>
+        </li>
+        <li>
+            <a routerLink="/configuracion" routerLinkActive="bg-blue-100 text-blue-600"
+            class="flex items-center gap-3 p-2 rounded-lg hover:bg-blue-50 text-gray-700">
+            <i class="lucide lucide-settings"></i> <span>Configuración</span>
+            </a>
+        </li>
+        </ul>
+    </nav>
+</aside>

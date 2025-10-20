@@ -1,0 +1,212 @@
+.registros-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  color: #222;
+  padding: 1.5rem;
+  border-radius: 12px;
+  min-height: 100vh; // ocupa toda la altura de la ventana
+  background: #FAFAFA;
+}
+
+/* 🧩 Cuadro 1: Filtros */
+.filtros-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  
+
+  h2 {
+    margin-bottom: 1rem;
+    color: #333;
+    font-size: 1.3rem;
+  }
+
+  .filtros-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1rem;
+    justify-items: center; /* centra elementos en cada celda */
+    align-items: end;
+  }
+
+  label {
+    font-size: 0.85rem;
+    color: #555;
+    
+  }
+
+  input[type="text"],
+  input[type="date"],
+  select {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    background: #fff;
+    color: #333;
+    appearance: none; /* elimina flecha por defecto en algunos navegadores */
+    transition: border 0.2s, box-shadow 0.2s;
+
+  }
+
+  select option {
+    color: #333;
+    background: #fff;
+  }
+
+  .filtro-botones {
+    display: flex;
+    gap: 0.8rem;
+    justify-content: center; /* centra botones */
+    margin-top: 1rem;
+    font-size: 0.9rem;
+
+    button {
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-filtrar {
+      background: #e9ecef;
+      color: #000000;
+
+      &:hover {
+        background: #dee2e6;
+      }
+    }
+
+    .btn-limpiar {
+      background: #e9ecef;
+      color: #000000;
+
+      &:hover {
+        background: #dee2e6;
+      }
+    }
+  }
+}
+
+
+/* 💰 Cuadro 2 y 3 */
+.resumen-card {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: -10px;
+  
+
+  h3 {
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 0.3rem;
+  }
+
+  .monto {
+    font-size: 1.7rem;
+    font-weight: bold;
+  }
+
+  
+}
+
+.text-green-600 { color: #16a34a; }
+.text-red-600 { color: #dc2626; }
+
+
+.text-green-600 {
+  color: #16a34a;
+}
+
+.text-red-600 {
+  color: #dc2626;
+}
+
+
+/* 📋 Cuadro 4 */
+.tabla-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+
+  h2 {
+    margin-bottom: 1rem;
+    color: #333;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th, td {
+      text-align: left;
+      padding: 0.8rem;
+      border-bottom: 1px solid #e9ecef;
+      font-size: 0.8rem ;
+    }
+
+    th {
+      font-weight: 600;
+      background: #f1f3f5;
+      color: #333;
+    }
+
+    tr:hover {
+      background: #f8f9fa;
+    }
+
+    .no-resultados {
+      text-align: center;
+      color: #777;
+      padding: 1rem 0;
+    }
+  }
+
+  .estado {
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: capitalize;
+
+    &.completada { background: #d1e7dd; color: #0f5132; }
+    &.pendiente  { background: #fff3cd; color: #664d03; }
+    &.anulada    { background: #f8d7da; color: #842029; }
+  }
+
+  .acciones button {
+  padding: 0.3rem 0.6rem;
+  margin-right: 0.3rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.btn-ver {
+  background-color: #e9ecef; // azul
+  color: #000000;
+
+  &:hover {
+        background: #dee2e6;
+      }
+}
+
+.btn-anular {
+  background-color:#B4436C; // rojo
+  color: #fff;
+}
+
+}

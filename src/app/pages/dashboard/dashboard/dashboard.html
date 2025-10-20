@@ -1,0 +1,76 @@
+<div class="p-6 bg-[#FAFAFA] min-h-screen">
+  <h1 class="text-2xl font-semibold mb-4">Dashboard / Reportes</h1>
+
+  <!-- Tarjetas resumen -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <div class="bg-white rounded-2xl p-4 shadow">
+      <p class="text-sm text-gray-500">Ventas totales</p>
+      <p class="text-2xl font-bold">S/{{ ventasTotales | number:'1.2-2' }}</p>
+    </div>
+
+    <div class="bg-white rounded-2xl p-4 shadow">
+      <p class="text-sm text-gray-500">Productos</p>
+      <p class="text-2xl font-bold">{{ totalProductos }}</p>
+    </div>
+
+    <div class="bg-white rounded-2xl p-4 shadow">
+      <p class="text-sm text-gray-500">Top vendidos (unidades)</p>
+      <ul class="mt-2 text-sm">
+        <li *ngFor="let p of productosMasVendidos">{{ p.nombreProducto }} — {{ p.totalVendido }}</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Gráficos principales -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div class="bg-white rounded-2xl p-4 shadow">
+      <h3 class="font-semibold mb-3">Productos más vendidos</h3>
+      <canvas baseChart [data]="barData" [options]="barOptions" chartType="bar"></canvas>
+    </div>
+
+    <div class="bg-white rounded-2xl p-4 shadow">
+      <h3 class="font-semibold mb-3">Ventas por mes (últimos 6 meses)</h3>
+      <canvas baseChart [data]="lineData" [options]="lineOptions" chartType="line"></canvas>
+    </div>
+  </div>
+
+  <!-- 🔥 Filtros + Ventas por rango -->
+  <div class="mt-10 bg-white rounded-2xl p-6 shadow">
+    <h3 class="font-semibold mb-4 text-lg">📅 Ventas por rango de fechas</h3>
+
+    <div class="flex flex-wrap items-center gap-3 mb-4">
+      <select [(ngModel)]="productoSeleccionado" class="border p-2 rounded">
+        <option value="">Todos los productos</option>
+        <option *ngFor="let p of productos" [value]="p.idProducto">{{ p.nombreProducto }}</option>
+      </select>
+
+      <select [(ngModel)]="categoriaSeleccionada" class="border p-2 rounded">
+        <option value="">Todas las categorías</option>
+        <option *ngFor="let c of categorias" [value]="c.idCategoria">{{ c.nombreCategoria }}</option>
+      </select>
+
+      <input type="date" [(ngModel)]="fechaInicio" class="border p-2 rounded">
+      <input type="date" [(ngModel)]="fechaFin" class="border p-2 rounded">
+
+      <button (click)="consultarVentasPorRango()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+        Consultar
+      </button>
+    </div>
+
+    <div *ngIf="ventasRango" class="mt-3">
+      <p><strong>Total de ventas:</strong> S/{{ ventasRango.totalVentas | number:'1.2-2' }}</p>
+      <p><strong>Cantidad de transacciones:</strong> {{ ventasRango.cantidadVentas }}</p>
+    </div>
+
+    <div *ngIf="ventasRango?.detalleVentas?.length" class="mt-6">
+      <h4 class="font-semibold mb-3 text-md">📊 Gráfico de ventas en el rango</h4>
+      <canvas baseChart [data]="ventasRangoData" [options]="ventasRangoOptions" chartType="line"></canvas>
+    </div>
+  </div>
+
+  <!-- Productos por categoría -->
+  <div class="mt-10 bg-white rounded-2xl p-6 shadow">
+    <h3 class="font-semibold mb-4 text-lg">🔥 Productos más vendidos por categoría</h3>
+    <canvas baseChart [data]="topCategoriaData" [options]="topCategoriaOptions" chartType="bar"></canvas>
+  </div>
+</div>

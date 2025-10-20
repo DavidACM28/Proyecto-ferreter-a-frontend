@@ -1,0 +1,100 @@
+<div class="flex h-screen font-[Inter]">
+    <!-- Sidebar -->
+    <aside class="w-48 bg-[#1D1E18] text-white flex flex-col text-sm">
+        <div class="px-4 py-4 text-lg font-bold border-b border-gray-800">
+        Sistema
+        </div>
+
+        <!-- Inicio -->
+        <div class="px-4 py-2 text-xs font-semibold uppercase tracking-wide">
+        Inicio
+        </div>
+        <ul class="space-y-1">
+        <li>
+            <a routerLink="/dashboard" routerLinkActive="bg-[#2C2C2D]"
+            class="flex items-center gap-3 px-4 py-2 rounded transition text-sm">
+            <span class="material-symbols-rounded">dashboard</span>
+            <span>Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a routerLink="/ventas" routerLinkActive="bg-[#2C2C2D]"
+            class="flex items-center gap-3 px-4 py-2 rounded transition text-sm">
+            <span class="material-symbols-rounded">shopping_cart</span>
+            <span>Ventas</span>
+            </a>
+        </li>
+        </ul>
+
+        <!-- Inventario -->
+        <div class="px-4 py-2 text-xs font-semibold uppercase tracking-wide">
+        Inventario
+        </div>
+        <ul class="space-y-1">
+        <li>
+            <a routerLink="/productos" routerLinkActive="bg-[#2C2C2D]"
+            class="flex items-center gap-3 px-4 py-2 rounded transition text-sm">
+            <span class="material-symbols-rounded">inventory</span>
+            <span>Productos</span>
+            </a>
+        </li>
+        <li>
+            <a routerLink="/stock" routerLinkActive="bg-[#2C2C2D]"
+            class="flex items-center gap-3 px-4 py-2 rounded transition text-sm">
+            <span class="material-symbols-rounded">inventory_2</span>
+            <span>Stock</span>
+            </a>
+        </li>
+        <li>
+            <a routerLink="/movimientos" routerLinkActive="bg-[#2C2C2D]"
+            class="flex items-center gap-3 px-4 py-2 rounded transition text-sm">
+            <span class="material-symbols-rounded">sync_alt</span>
+            <span>Movimientos</span>
+            </a>
+        </li>
+        <li>
+            <a routerLink="/reportes" routerLinkActive="bg-[#2C2C2D]"
+            class="flex items-center gap-3 px-4 py-2 rounded transition text-sm">
+            <span class="material-symbols-rounded">bar_chart</span>
+            <span>Reportes</span>
+            </a>
+        </li>
+        </ul>
+
+        <!-- Configuraciones -->
+        <div class="px-4 py-2 text-xs font-semibold uppercase tracking-wide">
+        Configuraciones
+        </div>
+        <ul class="space-y-1">
+        <li>
+            <a routerLink="/configuracion" routerLinkActive="bg-[#2C2C2D]"
+            class="flex items-center gap-3 px-4 py-2 rounded transition text-sm">
+            <span class="material-symbols-rounded">settings</span>
+            <span>Configuración</span>
+            </a>
+        </li>
+        <li>
+            <a routerLink="/ayuda" routerLinkActive="bg-[#2C2C2D]"
+            class="flex items-center gap-3 px-4 py-2 rounded transition text-sm">
+            <span class="material-symbols-rounded">help</span>
+            <span>Ayuda</span>
+            </a>
+        </li>
+        <li>
+            <a routerLink="/logout" (click)="logout()" class="flex items-center gap-3 px-4 py-2 rounded transition text-sm">
+            <span class="material-symbols-rounded">logout</span>
+            <span>Cerrar Sesión</span>
+            </a>
+        </li>
+        </ul>
+    </aside>
+
+    <!-- Main content -->
+    <main class="flex-1 flex flex-col">
+
+        <!-- Router outlet -->
+        <div class="flex-1 p-0 bg-[#F2F3F2] overflow-y-auto">
+        <router-outlet></router-outlet>
+        </div>
+    </main>
+</div>

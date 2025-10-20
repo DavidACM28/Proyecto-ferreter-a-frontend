@@ -1,0 +1,19 @@
+:host {
+  display: block;
+}
+
+button {
+  transition: background 0.3s ease;
+}
+
+canvas {
+  max-height: 400px;
+}
+
+.bg-white {
+  transition: box-shadow 0.2s ease;
+}
+.bg-white:hover {
+  box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+}
+

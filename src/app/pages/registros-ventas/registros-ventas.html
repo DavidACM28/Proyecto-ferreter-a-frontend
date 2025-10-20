@@ -1,0 +1,113 @@
+<div class="registros-container">
+
+    <!-- 🧩 Cuadro 1: Filtros -->
+    <div class="filtros-card">
+        <div class="filtros-grid centrado">
+        <div class="filtro-item">
+            <label for="buscar">Buscar Producto </label>
+            <input type="text" id="buscar" placeholder="" [(ngModel)]="filtroTexto">
+        </div>
+
+        <div class="filtro-item">
+            <label for="fechaDesde">Fecha desde</label>
+            <input type="date" id="fechaDesde" [(ngModel)]="fechaDesde">
+        </div>
+
+        <div class="filtro-item">
+            <label for="fechaHasta">Fecha hasta</label>
+            <input type="date" id="fechaHasta" [(ngModel)]="fechaHasta">
+        </div>
+
+        <div class="filtro-item">
+        <label for="tipoVendedor">Tipo de vendedor</label>
+        <select id="tipoVendedor" [(ngModel)]="tipoVendedor">
+            <option value="">Todos</option>
+            <option value="admin">Admin</option>
+            <option value="vendedor1">Vendedor 1</option>
+            </select>
+        </div>
+
+        <div class="filtro-item">
+        <label for="tipoPago">Tipo de pago</label>
+        <select id="tipoPago" [(ngModel)]="tipoPago">
+            <option value="">Todos</option>
+            <option value="efectivo">Efectivo</option>
+            <option value="tarjeta">Tarjeta</option>
+            <option value="transferencia">Transferencia</option>
+        </select>
+        </div>
+
+        <div class="filtro-botones">
+            <button class="btn-filtrar" (click)="filtrarRegistros()">Filtrar</button>
+            <button class="btn-limpiar" (click)="limpiarFiltros()">Limpiar</button>
+        </div>
+        </div>
+    </div>
+
+    <!-- 💰 Cuadro 2 y 3: Totales -->
+
+    <!-- 💰 Cuadro 2, 3 y 4: Totales y Cambio semanal -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-0">
+    <!-- Total vendido -->
+    <div class="resumen-card total-vendido">
+        <h3>Total Vendido</h3>
+        <p class="monto">S/ {{ totalVendido | number:'1.2-2' }}</p>
+    </div>
+
+    <!-- Número de ventas -->
+    <div class="resumen-card numero-ventas">
+        <h3>Número de Ventas</h3>
+        <p class="monto">{{ numeroVentas }}</p>
+    </div>
+
+    <!-- Cambio semanal -->
+    <div class="resumen-card cambio-semanal">
+        <h3>Cambio Semanal</h3>
+        <p class="monto" [ngClass]="{'text-green-600': cambioSemanal >= 0, 'text-red-600': cambioSemanal < 0}">
+        {{ cambioSemanal >= 0 ? '+' : '' }}{{ cambioSemanal }}%
+        </p>
+    </div>
+    </section>
+
+
+    <!-- 📋 Cuadro 4: Tabla de registros -->
+    <div class="tabla-card">
+        <table>
+        <thead>
+            <tr>
+            <th>Fecha</th>
+            <th>Código</th>
+            <th>Cliente</th>
+            <th>Vendedor</th>
+            <th>Monto</th>
+            <th>Pago</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr *ngFor="let venta of registrosFiltrados">
+            <td>{{ venta.fecha | date:'dd/MM/yyyy' }}</td>
+            <td>{{ venta.idVenta }}</td>
+            <td>{{ venta.cliente || '—' }}</td>
+            <td>{{ venta.vendedor || '—' }}</td>
+            <td>S/ {{ venta.total | number:'1.2-2' }}</td>
+            <td>{{ venta.metodoPago }}</td>
+            <td>
+                <span class="estado" [ngClass]="venta.estado.toLowerCase()">{{ venta.estado }}</span>
+            </td>
+            <td class="acciones">
+                <button class="btn-ver" (click)="verDetalles(venta)" type="button">Ver</button>
+                <button class="btn-anular" (click)="anularVenta(venta)" type="button">Anular</button>
+            </td>
+            </tr>
+
+            <tr *ngIf="registrosFiltrados.length === 0">
+            <td colspan="8" class="no-resultados">No se encontraron registros.</td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
+</div>
+

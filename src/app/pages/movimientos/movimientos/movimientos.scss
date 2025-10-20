@@ -1,0 +1,66 @@
+/* Contenedor general */
+.movs-container{
+  display:flex; flex-direction:column; gap:1.5rem;
+  color:#222; padding:1.5rem; border-radius:12px;
+  min-height:100vh; background:#FAFAFA;
+}
+
+/* 🧩 Filtros */
+.filtros-card{background:#ffffff; border-radius:12px; padding:1.5rem; box-shadow:0 2px 6px rgba(0,0,0,0.08)}
+.filtros-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:1rem; justify-items:center; align-items:end}
+.filtro-item{width:100%}
+.filtros-card label{font-size:.85rem; color:#555}
+.filtros-card input[type="text"], .filtros-card input[type="date"], .filtros-card select{
+  width:100%; padding:.6rem; border:1px solid #ccc; border-radius:8px; font-size:.8rem; background:#fff; color:#333; appearance:none; transition:border .2s, box-shadow .2s;
+}
+.filtro-botones{display:flex; gap:.8rem; justify-content:center; margin-top:1rem; font-size:.9rem}
+.filtro-botones button{padding:.6rem 1.2rem; border:none; border-radius:8px; font-weight:500; cursor:pointer; transition:background .2s}
+.btn-filtrar{background:#e9ecef; color:#000}.btn-filtrar:hover{background:#dee2e6}
+.btn-limpiar{background:#e9ecef; color:#000}.btn-limpiar:hover{background:#dee2e6}
+
+/* 💰 Resumen */
+.resumen-grid{display:grid; gap:1rem; grid-template-columns:repeat(3, minmax(0,1fr))}
+@media (max-width:900px){ .resumen-grid{grid-template-columns:1fr 1fr} }
+@media (max-width:600px){ .resumen-grid{grid-template-columns:1fr} }
+.resumen-card{background:#fff; padding:1rem; border-radius:12px; box-shadow:0 2px 6px rgba(0,0,0,0.08); display:flex; flex-direction:column; justify-content:center; align-items:center; margin-top:-10px}
+.resumen-card h3{font-size:.9rem; color:#555; margin-bottom:.3rem}
+.resumen-card .monto{font-size:1.7rem; font-weight:700}
+
+/* 📋 Tabla */
+.tabla-card{background:#ffffff; border-radius:12px; padding:1.5rem; box-shadow:0 2px 6px rgba(0,0,0,0.08)}
+.tabla-card h2{margin-bottom:1rem; color:#333}
+.tabla-card table{width:100%; border-collapse:collapse}
+.tabla-card th, .tabla-card td{padding:.8rem; border-bottom:1px solid #e9ecef; font-size:.8rem; text-align:left; vertical-align:middle}
+.tabla-card th{font-weight:600; background:#f1f3f5; color:#333}
+.tabla-card tr:hover{background:#f8f9fa}
+.num{text-align:right}
+.fit{white-space:nowrap; width:1%}
+
+/* Chips de tipo */
+.tag{display:inline-block; padding:.25rem .6rem; border-radius:999px; font-size:.75rem; font-weight:600; border:1px solid transparent}
+.tag.in{ background:#d1fae5; color:#065f46; border-color:#a7f3d0 }   /* Entrada */
+.tag.out{ background:#fee2e2; color:#991b1b; border-color:#fecaca }   /* Salida */
+.tag.adj{ background:#e5e7eb; color:#374151; border-color:#d1d5db }   /* Ajuste */
+
+/* Acciones (alineadas) */
+.acciones{display:flex; align-items:center; gap:.35rem}
+.acciones .btn-ver{padding:.32rem .65rem; border:none; border-radius:6px; cursor:pointer; font-size:.85rem; background:#e9ecef; color:#000}
+.acciones .btn-ver:hover{background:#dee2e6}
+
+/* Paginación: SOLO FLECHAS */
+.pager{
+  display:flex; align-items:center; justify-content:center; gap:12px; margin-top:12px;
+}
+.pager__info{color:#555; font-size:.85rem}
+.arrow{
+  display:inline-block; text-decoration:none; color:#222; font-size:22px; line-height:1; padding:4px 10px;
+  transition:opacity .2s ease, transform .05s ease;
+}
+.arrow:active{transform:translateY(1px)}
+.arrow[aria-disabled="true"]{opacity:.35; pointer-events:none}
+
+/* Estado vacío */
+.no-resultados{text-align:center; color:#777; padding:1rem 0}
+
+/* Fondo */
+body{background:#FAFAFA}

@@ -1,0 +1,36 @@
+<section class="login-split">
+  <div class="login-left">
+    <header class="brand">
+      <span class="brand-dot"></span><span class="brand-text"></span>
+    </header>
+    
+    <main class="panel">
+      <h1 class="title">
+        ¡Bienvenido de nuevo!<br>
+        <span class="title-strong">Inicia sesión</span>
+      </h1>
+      <p class="subtitle">Nos alegra verte otra vez.</p>
+
+      <form class="form-custom" [formGroup]="formLogin">
+        <label class="label" for="email">Usuario <span class="req">*</span></label>
+        <input id="email" class="input" type="email" placeholder="Ingresa tu usuario" formControlName="username">
+
+        <label class="label" for="password">Contraseña <span class="req">*</span></label>
+        <input id="password" class="input" type="password" placeholder="Ingresa tu contraseña"formControlName="password">
+
+        <div class="row">
+          <label class="check">
+            <input type="checkbox">
+            <span>Recordarme</span>
+          </label>
+          <a href="#" class="link">¿Olvidaste tu contraseña?</a>
+        </div>
+
+        <button type="button" class="btn-primary" (click)="login()">Ingresar</button>
+      </form>
+    </main>
+  </div>
+
+  <!-- DERECHA: solo fondo (sin tarjetas) -->
+  <div class="login-right" aria-hidden="true"></div>
+</section>
