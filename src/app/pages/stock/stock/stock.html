@@ -89,10 +89,10 @@
           <td *ngIf="prod.cantidadProducto! > 10" style="text-align: center;">
             <span class="estado ok">Activo</span>
           </td>
-          <td *ngIf="prod.cantidadProducto! < 10 && prod.cantidadProducto! > 0">
+          <td *ngIf="prod.cantidadProducto! < 10 && prod.cantidadProducto! > 0" style="text-align: center;">
             <span class="estado bajo">Bajo</span>
           </td>
-          <td *ngIf="prod.cantidadProducto! == 0">
+          <td *ngIf="prod.cantidadProducto! == 0" style="text-align: center;">
             <span class="estado sin">Sin stock</span>
           </td>
           <td class="acciones">

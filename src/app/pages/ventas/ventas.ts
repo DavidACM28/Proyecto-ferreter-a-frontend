@@ -53,10 +53,14 @@ export class VentasComponent implements OnInit {
 
 
 
-  constructor(){}
+  constructor(){
+    const data = localStorage.getItem('carrito');
+    if(data){
+      const entries: [number, { producto: productosResponse, cantidad: number }][] = JSON.parse(data); this.carrito = new Map(entries);
+    }
+  }
 
   ngOnInit(): void {
-  
     this.categoriasService.obtenerCategorias().subscribe((res) => {
       this.categorias = res;
     },
@@ -74,11 +78,9 @@ export class VentasComponent implements OnInit {
     this.productosService.obtenerMasVendidos().subscribe((res) => {
       this.productosMasVendidos = res;
     });
-    
   }
   
   aplicarFiltros(busqueda: String, categoria: String): void {
-  debugger; 
   const busquedaLimpia = busqueda.trim().toLowerCase();
   const categoriaLimpia = categoria.trim().toLowerCase();
 
