@@ -30,6 +30,7 @@ export class ProductosComponent implements OnInit {
   categoriaSeleccionada = 'Todos';
   busqueda = '';
   total = 0;
+  tipo = false;
 
   mostrarModal = false;
   productoEditar?: productosResponse | null;
@@ -87,6 +88,12 @@ export class ProductosComponent implements OnInit {
 
   nuevoProducto() {
     this.mostrarModal = true;
+    this.tipo = true;
+  }
+
+  nuevaCategoria() {
+    this.mostrarModal = true;
+    this.tipo = false;
   }
 
   guardarProducto() {
@@ -109,8 +116,18 @@ export class ProductosComponent implements OnInit {
     })
     this.mostrarModal = false;
   }
+  crearCategoria() {
+    this.ngOnInit();
+    Swal.fire({
+      title: 'Categoria creada',
+      text: 'Categoria creada con éxito',
+      icon: 'success',
+    })
+    this.mostrarModal = false;
+  }
 
   eliminarProducto(codigo: string) {
+    
   }
 
   cancelarModal() {

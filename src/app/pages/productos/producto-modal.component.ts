@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 import { AuditoriaBody } from '../../modelos/auditoriaBody';
 import { Trabajador } from '../../modelos/trabajador';
 import { productoBody } from '../../modelos/productoBody';
+import { categoriaBody } from '../../modelos/categoriaBody';
 
 
 @Component({
@@ -20,10 +21,12 @@ import { productoBody } from '../../modelos/productoBody';
 })
 export class ProductoModalComponent {
     @Input() producto?: productosResponse | null;
+    @Input() tipo: boolean = false;
     @Output() onGuardar = new EventEmitter<void>();
     @Output() onCancelar = new EventEmitter<void>();
     @Output() onEliminar = new EventEmitter<string>();
     @Output() onCrear = new EventEmitter<void>();
+    @Output() onCrearCategoria = new EventEmitter<void>();
 
     categoriaService = inject(Categorias);
     productosService = inject(Productos);
@@ -38,7 +41,8 @@ export class ProductoModalComponent {
     stockAnterior = 0;
     estado = true;
     razonCambioStock = '';
-    
+    nombreCategoria = '';
+
     ngOnInit() {
         if (this.producto != null) {
             this.codigo = this.producto.idProducto;
@@ -161,5 +165,14 @@ export class ProductoModalComponent {
             return false;
         }
         return this.stock != this.stockAnterior;
+    }
+    agregarCategoria() {
+        var categoria: categoriaBody = {
+            nombreCategoria: this.nombreCategoria,
+            estadoCategoria: true
+        };
+        this.categoriaService.nueveaCategoria(categoria).subscribe(() => {
+            this.onCrearCategoria.emit();
+        });
     }
 }

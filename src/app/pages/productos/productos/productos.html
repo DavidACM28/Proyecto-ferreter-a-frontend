@@ -27,6 +27,13 @@
           type="button">
           Nuevo Producto
         </button>
+        <button
+          (click)="nuevaCategoria()"
+          class="btn-nuevo"
+          type="button"
+          style="margin-left: 10px;">
+          Nueva catagoría
+        </button>
       </div>
     </div>
   </div>
@@ -95,8 +102,10 @@
 <app-producto-modal
   *ngIf="mostrarModal"
   [producto]="productoEditar"
+  [tipo]="tipo"
   (onGuardar)="guardarProducto()"
   (onCrear)="crearProducto()"
+  (onCrearCategoria)="crearCategoria()"
   (onCancelar)="cancelarModal()"
   (onEliminar)="eliminarProducto($event)">
 </app-producto-modal>
