@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Producto } from '../../../modelos/producto.model';
 import { ProductoModalComponent } from '../producto-modal.component';
 import { productosResponse } from '../../../modelos/productosResponse';
 import { Productos } from '../../../services/productos';
@@ -127,7 +126,7 @@ export class ProductosComponent implements OnInit {
   }
 
   eliminarProducto(codigo: string) {
-    
+
   }
 
   cancelarModal() {

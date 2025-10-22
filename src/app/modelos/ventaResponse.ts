@@ -5,4 +5,6 @@ export interface ventaResponse {
     trabajador: Trabajador;
     fechaVenta: Date;
     totalVenta: number;
+    clienteVenta: string;
+    medioPagoVenta: string; 
 }

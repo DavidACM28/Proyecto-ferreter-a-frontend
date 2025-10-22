@@ -47,7 +47,7 @@ export class VentasComponent implements OnInit {
 
   // ----- Datos del cliente -----
   dniCliente: string = '';
-  nombreCliente: string = '';
+  nombreCliente: string = 'Clientes varios';
   rucCliente: string = '';
   razonSocial: string = ''
 
@@ -162,7 +162,7 @@ export class VentasComponent implements OnInit {
       this.mostrarModal = true;
       this.paso = 1;
       this.dniCliente = '';
-      this.nombreCliente = '';
+      this.nombreCliente = 'Clientes varios';
       this.rucCliente = '';
       this.razonSocial = '';
     }
@@ -243,6 +243,22 @@ export class VentasComponent implements OnInit {
     });
   }
 
+  volverPaso1(){
+    this.razonSocial = '';
+    this.nombreCliente = 'Clientes varios';
+    this.dniCliente = '';
+    this.rucCliente = '';
+    this.paso = 1;
+  }
+
+  irPaso2(){
+    if(this.tipoComprobante != 'Boleta simple'){
+      this.nombreCliente = '';
+      this.paso = 2;
+    }
+    this.paso = 2;
+  }
+
   validarPaso2(): void {
     if (this.tipoComprobante === 'Boleta simple') {
       this.paso = 3;
@@ -293,7 +309,9 @@ export class VentasComponent implements OnInit {
     }
     var venta: VentaBody = {
       trabajador: trabajador,
-      totalVenta: this.total
+      totalVenta: this.total,
+      clienteVenta: this.nombreCliente || this.razonSocial,
+      medioPagoVenta: this.metodoPago
     }
     this.ventaService.crearVenta(venta).subscribe(res => {
       this.carrito.forEach((item) => {
