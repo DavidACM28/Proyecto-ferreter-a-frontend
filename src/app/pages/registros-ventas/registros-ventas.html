@@ -3,44 +3,45 @@
     <!-- 🧩 Cuadro 1: Filtros -->
     <div class="filtros-card">
         <div class="filtros-grid centrado">
-        <div class="filtro-item">
-            <label for="buscar">Buscar Producto </label>
-            <input type="text" id="buscar" placeholder="" [(ngModel)]="filtroTexto">
-        </div>
+            <div class="filtro-item">
+                <label for="buscar">Buscar Cliente</label>
+                <input type="text" id="buscar" placeholder="" [(ngModel)]="filtroCliente">
+            </div>
 
-        <div class="filtro-item">
-            <label for="fechaDesde">Fecha desde</label>
-            <input type="date" id="fechaDesde" [(ngModel)]="fechaDesde">
-        </div>
+            <div class="filtro-item">
+                <label for="buscar">Buscar Nombre del Trabajador</label>
+                <input type="text" id="buscar" placeholder="" [(ngModel)]="filtroNombre">
+            </div>
 
-        <div class="filtro-item">
-            <label for="fechaHasta">Fecha hasta</label>
-            <input type="date" id="fechaHasta" [(ngModel)]="fechaHasta">
-        </div>
+            <div class="filtro-item">
+                <label for="buscar">Buscar Apellido del Trabajador</label>
+                <input type="text" id="buscar" placeholder="" [(ngModel)]="filtroApellido">
+            </div>
 
-        <div class="filtro-item">
-        <label for="tipoVendedor">Tipo de vendedor</label>
-        <select id="tipoVendedor" [(ngModel)]="tipoVendedor">
-            <option value="">Todos</option>
-            <option value="admin">Admin</option>
-            <option value="vendedor1">Vendedor 1</option>
-            </select>
-        </div>
+            <div class="filtro-item">
+                <label for="fechaDesde">Fecha desde</label>
+                <input type="date" id="fechaDesde" [(ngModel)]="filtroDesde">
+            </div>
 
-        <div class="filtro-item">
-        <label for="tipoPago">Tipo de pago</label>
-        <select id="tipoPago" [(ngModel)]="tipoPago">
-            <option value="">Todos</option>
-            <option value="efectivo">Efectivo</option>
-            <option value="tarjeta">Tarjeta</option>
-            <option value="transferencia">Transferencia</option>
-        </select>
-        </div>
+            <div class="filtro-item">
+                <label for="fechaHasta">Fecha hasta</label>
+                <input type="date" id="fechaHasta" [(ngModel)]="filtroHasta">
+            </div>
 
-        <div class="filtro-botones">
-            <button class="btn-filtrar" (click)="filtrarRegistros()">Filtrar</button>
-            <button class="btn-limpiar" (click)="limpiarFiltros()">Limpiar</button>
-        </div>
+            <div class="filtro-item">
+                <label for="tipoPago">Tipo de pago</label>
+                <select id="tipoPago" [(ngModel)]="filtroMedioPago">
+                    <option value="">Todos</option>
+                    <option value="efectivo">Efectivo</option>
+                    <option value="tarjeta">Tarjeta</option>
+                    <option value="transferencia">Transferencia</option>
+                </select>
+            </div>
+
+            <div class="filtro-botones">
+                <button class="btn-filtrar" (click)="aplicarFiltros()">Filtrar</button>
+                <button class="btn-limpiar" (click)="limpiarFiltros()">Limpiar</button>
+            </div>
         </div>
     </div>
 
@@ -48,65 +49,127 @@
 
     <!-- 💰 Cuadro 2, 3 y 4: Totales y Cambio semanal -->
     <section class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-0">
-    <!-- Total vendido -->
-    <div class="resumen-card total-vendido">
-        <h3>Total Vendido</h3>
-        <p class="monto">S/ {{ totalVendido | number:'1.2-2' }}</p>
-    </div>
+        <!-- Total vendido -->
+        <div class="resumen-card total-vendido">
+            <h3>Total de Ventas del Mes</h3>
+            <p class="monto">S/ {{ totalVendido | number:'1.2-2' }}</p>
+        </div>
 
-    <!-- Número de ventas -->
-    <div class="resumen-card numero-ventas">
-        <h3>Número de Ventas</h3>
-        <p class="monto">{{ numeroVentas }}</p>
-    </div>
+        <!-- Número de ventas -->
+        <div class="resumen-card numero-ventas">
+            <h3>Número de Ventas del Mes</h3>
+            <p class="monto">{{ totalVentas }}</p>
+        </div>
 
-    <!-- Cambio semanal -->
-    <div class="resumen-card cambio-semanal">
-        <h3>Cambio Semanal</h3>
-        <p class="monto" [ngClass]="{'text-green-600': cambioSemanal >= 0, 'text-red-600': cambioSemanal < 0}">
-        {{ cambioSemanal >= 0 ? '+' : '' }}{{ cambioSemanal }}%
-        </p>
-    </div>
+        <!-- Cambio semanal -->
+        <div class="resumen-card cambio-semanal">
+            <h3>Cambio Semanal</h3>
+            <p class="monto" [ngClass]="{'text-green-600': cambioSemanal >= 0, 'text-red-600': cambioSemanal < 0}">
+                {{ cambioSemanal >= 0 ? '+' : '' }}{{ cambioSemanal }}%
+            </p>
+        </div>
     </section>
 
 
     <!-- 📋 Cuadro 4: Tabla de registros -->
     <div class="tabla-card">
         <table>
-        <thead>
-            <tr>
-            <th>Fecha</th>
-            <th>Código</th>
-            <th>Cliente</th>
-            <th>Vendedor</th>
-            <th>Monto</th>
-            <th>Medio de Pago</th>
-            <th>Acciones</th>
-            </tr>
-        </thead>
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Código</th>
+                    <th>Cliente</th>
+                    <th>Vendedor</th>
+                    <th>Monto</th>
+                    <th>Medio de Pago</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
 
-        <tbody>
-            <tr *ngFor="let venta of registrosFiltrados">
-            <td>{{ venta.fecha | date:'dd/MM/yyyy' }}</td>
-            <td>{{ venta.idVenta }}</td>
-            <td>{{ venta.cliente || '—' }}</td>
-            <td>{{ venta.vendedor || '—' }}</td>
-            <td>S/ {{ venta.total | number:'1.2-2' }}</td>
-            <td>{{ venta.metodoPago }}</td>
-            <td>
-                <span class="estado" [ngClass]="venta.estado.toLowerCase()">{{ venta.estado }}</span>
-            </td>
-            <td class="acciones">
-                <button class="btn-ver" (click)="verDetalles(venta)" type="button">Ver</button>
-                <button class="btn-anular" (click)="anularVenta(venta)" type="button">Anular</button>
-            </td>
-            </tr>
-
-            <tr *ngIf="registrosFiltrados.length === 0">
-            <td colspan="8" class="no-resultados">No se encontraron registros.</td>
-            </tr>
-        </tbody>
+            <tbody>
+                <tr *ngFor="let venta of ventas">
+                    <td>{{ venta.fechaVenta | date:'dd/MM/yyyy' }}</td>
+                    <td>{{ venta.idVenta }}</td>
+                    <td>{{ venta.clienteVenta || '—' }}</td>
+                    <td>{{ venta.trabajador.nombreTrabajador || '—' }} {{venta.trabajador.apellidoTrabajador || '—' }}</td>
+                    <td>S/ {{ venta.totalVenta | number:'1.2-2' }}</td>
+                    <td>{{ venta.medioPagoVenta }}</td>
+                    <td class="acciones">
+                        <button class="btn-ver" (click)="verDetalles(venta)" type="button">Ver</button>
+                        <button class="btn-anular" (click)="anularVenta(venta)" type="button">Anular</button>
+                    </td>
+                </tr>
+                <tr *ngIf="ventas.length === 0">
+                    <td colspan="8" class="no-resultados">No se encontraron registros.</td>
+                </tr>
+            </tbody>
         </table>
+        <nav class="pager" aria-label="Paginación">
+      <a (click)="atrasarPagina()" class="arrow prev cursor-pointer" aria-label="Anterior">‹</a>
+      <span class="pager__info">{{pagina + 1}} / {{totalPaginas}}</span>
+      <a (click)="avanzarPagina()" class="arrow next cursor-pointer" aria-label="Siguiente">›</a>
+    </nav>
     </div>
 </div>
 
+<!-- 🪟 Modal Detalle de Venta -->
+<div *ngIf="mostrarDetalle" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50">
+  <div class="bg-white rounded-2xl shadow-lg w-full max-w-4xl p-6 relative overflow-hidden">
+
+    <!-- ❌ Botón cerrar -->
+    <button 
+      (click)="cerrarDetalle()" 
+      class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-2xl font-bold"
+      aria-label="Cerrar"
+    >
+      ×
+    </button>
+
+    <h2 class="text-xl font-semibold mb-4 text-gray-800 text-center">🧾 Detalle de la Venta</h2>
+
+    <!-- 📋 Tabla de detalles -->
+    <div class="max-h-[60vh] overflow-y-auto">
+      <table class="w-full border border-gray-300 rounded-lg text-center text-sm">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="px-3 py-2 border">Producto</th>
+            <th class="px-3 py-2 border">Categoría</th>
+            <th class="px-3 py-2 border">Descripción</th>
+            <th class="px-3 py-2 border">Cantidad</th>
+            <th class="px-3 py-2 border">Precio Unitario (S/)</th>
+            <th class="px-3 py-2 border">Subtotal (S/)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let det of detalles" class="hover:bg-gray-50">
+            <td class="px-3 py-2 border">{{ det.producto.nombreProducto }}</td>
+            <td class="px-3 py-2 border">{{ det.producto.categoria?.nombreCategoria || 'Sin categoría' }}</td>
+            <td class="px-3 py-2 border truncate max-w-[150px]" title="{{ det.producto.descripcionProducto }}">
+              {{ det.producto.descripcionProducto || 'Sin descripción' }}
+            </td>
+            <td class="px-3 py-2 border">{{ det.cantidadProducto }}</td>
+            <td class="px-3 py-2 border">{{ det.precioProducto | number:'1.2-2' }}</td>
+            <td class="px-3 py-2 border">{{ (det.cantidadProducto * det.precioProducto) | number:'1.2-2' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 💰 Total general -->
+    <div class="text-right mt-4">
+      <p class="text-lg font-semibold text-gray-800">
+        Total: S/ {{ totalVenta | number:'1.2-2' }}
+      </p>
+    </div>
+
+    <!-- 🧩 Botón cerrar -->
+    <div class="mt-6 flex justify-center">
+      <button 
+        (click)="cerrarDetalle()" 
+        class="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition"
+      >
+        Cerrar
+      </button>
+    </div>
+  </div>
+</div>

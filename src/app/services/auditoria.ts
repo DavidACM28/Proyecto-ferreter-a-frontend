@@ -13,17 +13,17 @@ export class Auditoria {
 
   constructor() { }
 
-  obtenerAuditorias(pagina: number){
+  obtenerAuditorias(pagina: number) {
     return this.http.get<PageResponse<auditoriaResponse>>(this.baseUrl + 'auditoria/auditorias' + '?page=' + pagina + '&size=8');
   }
   filtrarAuditorias(producto: string, tipo: string, desde: string, hasta: string, page: number) {
-  let params: any = { page };
+    let params: any = { page };
 
-  if (producto) params.producto = producto;
-  if (tipo) params.tipo = tipo;
-  if (desde) params.fechaInicio = desde;
-  if (hasta) params.fechaFin = hasta;
+    if (producto) params.producto = producto;
+    if (tipo) params.tipo = tipo;
+    if (desde) params.fechaInicio = desde;
+    if (hasta) params.fechaFin = hasta;
 
-  return this.http.get<any>(`${this.baseUrl}auditoria/filtrar`, { params });
-}
+    return this.http.get<any>(`${this.baseUrl}auditoria/filtrar`, { params });
+  }
 }

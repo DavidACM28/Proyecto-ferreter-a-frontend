@@ -210,3 +210,13 @@
 }
 
 }
+.pager{
+  display:flex; align-items:center; justify-content:center; gap:12px; margin-top:12px;
+}
+.pager__info{color:#555; font-size:.85rem}
+.arrow{
+  display:inline-block; text-decoration:none; color:#222; font-size:22px; line-height:1; padding:4px 10px;
+  transition:opacity .2s ease, transform .05s ease;
+}
+.arrow:active{transform:translateY(1px)}
+.arrow[aria-disabled="true"]{opacity:.35; pointer-events:none}

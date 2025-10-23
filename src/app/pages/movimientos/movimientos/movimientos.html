@@ -3,40 +3,40 @@
   <div class="filtros-card">
     <div class="filtros-grid centrado">
       <div class="filtro-item">
-  <label for="m-prod">Producto</label>
-  <input id="m-prod" type="text" placeholder="Martillo, taladro…" [(ngModel)]="filtroProducto">
-</div>
+        <label for="m-prod">Producto</label>
+        <input id="m-prod" type="text" placeholder="Martillo, taladro…" [(ngModel)]="filtroProducto">
+      </div>
 
-<div class="filtro-item">
-  <label for="m-tipo">Tipo</label>
-  <select id="m-tipo" [(ngModel)]="filtroTipo">
-    <option value="">Todos</option>
-    <option value="entrada">Entrada</option>
-    <option value="salida">Salida</option>
-  </select>
-</div>
+      <div class="filtro-item">
+        <label for="m-tipo">Tipo</label>
+        <select id="m-tipo" [(ngModel)]="filtroTipo">
+          <option value="">Todos</option>
+          <option value="entrada">Entrada</option>
+          <option value="salida">Salida</option>
+        </select>
+      </div>
 
-<div class="filtro-item">
-  <label for="m-desde">Fecha desde</label>
-  <input id="m-desde" type="date" [(ngModel)]="filtroDesde">
-</div>
+      <div class="filtro-item">
+        <label for="m-desde">Fecha desde</label>
+        <input id="m-desde" type="date" [(ngModel)]="filtroDesde">
+      </div>
 
-<div class="filtro-item">
-  <label for="m-hasta">Fecha hasta</label>
-  <input id="m-hasta" type="date" [(ngModel)]="filtroHasta">
-</div>
+      <div class="filtro-item">
+        <label for="m-hasta">Fecha hasta</label>
+        <input id="m-hasta" type="date" [(ngModel)]="filtroHasta">
+      </div>
 
-<div class="filtro-botones">
-  <button class="btn-filtrar" type="button" (click)="aplicarFiltros()">Filtrar</button>
-  <button class="btn-limpiar" type="button" (click)="limpiarFiltros()">Limpiar</button>
-</div>
+      <div class="filtro-botones">
+        <button class="btn-filtrar" type="button" (click)="aplicarFiltros()">Filtrar</button>
+        <button class="btn-limpiar" type="button" (click)="limpiarFiltros()">Limpiar</button>
+      </div>
 
     </div>
   </div>
 
   <!-- 💰 Resumen -->
-  
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
     <!-- Total de movimientos -->
     <div class="bg-white shadow-md rounded-2xl p-4 text-center">
       <p class="text-gray-500 text-sm">Movimientos Totales</p>
@@ -50,7 +50,9 @@
         {{ ultimoMovimiento.fecha | date:'dd/MM/yyyy HH:mm' }} —
         <span class="font-medium">{{ obtenerTipoMovimiento(ultimoMovimiento!) }}</span>
       </p>
-      <ng-template #sinMov><p>No hay movimientos</p></ng-template>
+      <ng-template #sinMov>
+        <p>No hay movimientos</p>
+      </ng-template>
     </div>
 
     <!-- Variación neta -->
@@ -60,76 +62,68 @@
             'text-green-600': variacion > 0,
             'text-red-600': variacion < 0,
             'text-gray-700': variacion === 0
-          }" 
-          class="text-2xl font-semibold">
+          }" class="text-2xl font-semibold">
         {{ variacion > 0 ? '+' : '' }}{{ variacion }}
       </p>
     </div>
   </div>
-  
+
 
   <!-- 📋 Tabla Kardex (sin Documento) -->
   <div class="tabla-card">
     <h2>Kardex</h2>
     <table>
-  <thead>
-    <tr>
-      <th style="text-align: center;">Fecha</th>
-      <th style="text-align: center;">Producto</th>
-      <th style="text-align: center;">Tipo</th>
-      <th class="num" style="text-align: center;">Ingreso</th>
-      <th class="num" style="text-align: center;">Salida</th>
-      <th class="num" style="text-align: center;">Saldo</th>
-      <th class="fit" style="text-align: center;">Acciones</th>
-    </tr>
-  </thead>
+      <thead>
+        <tr>
+          <th style="text-align: center;">Fecha</th>
+          <th style="text-align: center;">Producto</th>
+          <th style="text-align: center;">Tipo</th>
+          <th class="num" style="text-align: center;">Ingreso</th>
+          <th class="num" style="text-align: center;">Salida</th>
+          <th class="num" style="text-align: center;">Saldo</th>
+          <th class="fit" style="text-align: center;">Acciones</th>
+        </tr>
+      </thead>
 
-  <tbody>
-    <tr *ngFor="let aud of auditorias">
-      <td style="text-align: center;">{{ aud.fecha | date:'dd/MM/yyyy' }}</td>
-      <td style="text-align: center;">{{ aud.producto.nombreProducto }}</td>
+      <tbody>
+        <tr *ngFor="let aud of auditorias">
+          <td style="text-align: center;">{{ aud.fecha | date:'dd/MM/yyyy' }}</td>
+          <td style="text-align: center;">{{ aud.producto.nombreProducto }}</td>
 
-      <!-- Tipo -->
-      <td style="text-align: center;">
-        <span 
-          class="tag" 
-          [ngClass]="{
+          <!-- Tipo -->
+          <td style="text-align: center;">
+            <span class="tag" [ngClass]="{
             'in': aud.cantidadNueva > aud.cantidadAnterior,
             'out': aud.cantidadNueva < aud.cantidadAnterior
-          }"
-        >
-          {{ aud.cantidadNueva > aud.cantidadAnterior ? 'Entrada' : 'Salida' }}
-        </span>
-      </td>
+          }">
+              {{ aud.cantidadNueva > aud.cantidadAnterior ? 'Entrada' : 'Salida' }}
+            </span>
+          </td>
 
-      <!-- Ingreso (+n o —) -->
-      <td class="num" style="text-align: center;">
-        {{
-          aud.cantidadNueva > aud.cantidadAnterior
+          <!-- Ingreso (+n o —) -->
+          <td class="num" style="text-align: center;">
+            {{
+            aud.cantidadNueva > aud.cantidadAnterior
             ? ('+' + (aud.cantidadNueva - aud.cantidadAnterior))
             : '—'
-        }}
-      </td>
+            }}
+          </td>
 
-      <!-- Salida (—n o —) -->
-      <td class="num" style="text-align: center;">
-        {{
-          aud.cantidadNueva < aud.cantidadAnterior
-            ? ('−' + (aud.cantidadAnterior - aud.cantidadNueva))
-            : '—'
-        }}
-      </td>
+          <!-- Salida (—n o —) -->
+          <td class="num" style="text-align: center;">
+            {{
+            aud.cantidadNueva < aud.cantidadAnterior ? ('−' + (aud.cantidadAnterior - aud.cantidadNueva)) : '—' }} </td>
 
-      <!-- Saldo actual -->
-      <td class="num" style="text-align: center;">{{ aud.cantidadNueva }}</td>
+              <!-- Saldo actual -->
+          <td class="num" style="text-align: center;">{{ aud.cantidadNueva }}</td>
 
-      <!-- Acciones -->
-      <td class="acciones text-center" style="text-align: center;">
-        <button class="btn-ver" type="button" (click)="abrirModalVer(aud)">Ver</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+          <!-- Acciones -->
+          <td class="acciones text-center" style="text-align: center;">
+            <button class="btn-ver" type="button" (click)="abrirModalVer(aud)">Ver</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
 
     <!-- Paginación: SOLO FLECHAS -->
@@ -145,11 +139,8 @@
   <div class="bg-white rounded-2xl shadow-lg w-full max-w-md p-6 relative">
 
     <!-- ❌ Botón cerrar -->
-    <button 
-      (click)="cerrarModalVer()" 
-      class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-2xl font-bold"
-      aria-label="Cerrar"
-    >
+    <button (click)="cerrarModalVer()"
+      class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-2xl font-bold" aria-label="Cerrar">
       ×
     </button>
 
@@ -164,7 +155,8 @@
 
       <div>
         <strong>👷 Trabajador:</strong>
-        <p>{{ movimientoSeleccionado!.trabajador.nombreTrabajador }} {{movimientoSeleccionado!.trabajador.apellidoTrabajador }}</p>
+        <p>{{ movimientoSeleccionado!.trabajador.nombreTrabajador }}
+          {{movimientoSeleccionado!.trabajador.apellidoTrabajador }}</p>
       </div>
 
       <div>
@@ -179,14 +171,15 @@
 
       <div>
         <strong>📦 Producto:</strong>
-        <p>{{ movimientoSeleccionado?.producto?.nombreProducto}}: {{movimientoSeleccionado!.producto.descripcionProducto}}</p>
+        <p>{{ movimientoSeleccionado?.producto?.nombreProducto}}:
+          {{movimientoSeleccionado!.producto.descripcionProducto}}</p>
       </div>
 
       <div>
         <strong>📋 Detalle del cambio:</strong>
         <p>
           {{
-            movimientoSeleccionado?.referencia
+          movimientoSeleccionado?.referencia
           }}
         </p>
       </div>
@@ -194,7 +187,8 @@
 
     <!-- 🧩 Botón cerrar -->
     <div class="mt-6 flex justify-center">
-      <button (click)="cerrarModalVer()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+      <button (click)="cerrarModalVer()"
+        class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
         Cerrar
       </button>
     </div>

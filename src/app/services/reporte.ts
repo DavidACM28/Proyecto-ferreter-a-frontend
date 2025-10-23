@@ -22,7 +22,7 @@ export class Reporte {
     return this.http.get<any[]>(`${this.base}/ventas-por-mes?meses=${meses}`);
   }
 
-  obtenerVentasPorRango(inicio: string, fin: string) {
-  return this.http.get<any>(`${this.base}/ventas-por-rango?inicio=${inicio}&fin=${fin}`);
-}
+    obtenerVentasPorRango(inicio: string, fin: string) {
+    return this.http.get<any>(`${this.base}/ventas-por-rango?inicio=${inicio}&fin=${fin}`);
+  }
 }
