@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import { Venta } from '../../../services/venta';
 import { Trabajador } from '../../../modelos/trabajador';
 import { AuditoriaBody } from '../../../modelos/auditoriaBody';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-stock',
@@ -38,7 +39,13 @@ export class StockComponent implements OnInit {
   stockAnterior: number = 0;
   stockNuevo: number = 0;
   productoSeleccionado: productosResponse | null = null;
+  http = inject(HttpClient);
 
+
+  // 🔹 NUEVO: IA
+  mostrarModalIA: boolean = false;
+  loadingIA: boolean = false;
+  prediccionesIA: any[] = [];
 
   ngOnInit(): void {
     this.productosService.obtenerProductos().subscribe(data => {
@@ -47,16 +54,40 @@ export class StockComponent implements OnInit {
       this.unidadesEnAlmacen = data.reduce((acum, producto) => acum + producto.cantidadProducto!, 0);
       this.productos.forEach(producto => {
         if (producto.cantidadProducto! < 10 && producto.cantidadProducto! > 0) {
-          this.totalUnidadesStockBajo ++;
-        }
-        else if (producto.cantidadProducto! == 0) {
-          this.totalUnidadesStockSin ++;
+          this.totalUnidadesStockBajo++;
+        } else if (producto.cantidadProducto! == 0) {
+          this.totalUnidadesStockSin++;
         }
       });
     });
     this.categoriasService.obtenerCategorias().subscribe(data => {
       this.categorias = data;
     });
+  }
+
+  // 🔹 NUEVO: Obtener predicciones IA
+  obtenerPrediccionesIA() {
+    this.mostrarModalIA = true;
+    this.loadingIA = true;
+    this.http.get<any[]>('http://localhost:8080/prediccion/compras').subscribe({
+      next: (data) => {
+        this.prediccionesIA = data;
+        this.loadingIA = false;
+      },
+      error: (err) => {
+        this.loadingIA = false;
+        Swal.fire({
+          title: 'Error',
+          text: 'No se pudo obtener las predicciones de la IA.',
+          icon: 'error'
+        });
+      }
+    });
+  }
+
+  cerrarModalIA() {
+    this.mostrarModalIA = false;
+    this.prediccionesIA = [];
   }
   filtrarProductos() {
 
