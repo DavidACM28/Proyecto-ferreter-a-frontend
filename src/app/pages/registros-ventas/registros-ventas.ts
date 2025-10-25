@@ -48,7 +48,8 @@ export class RegistrosVentasComponent implements OnInit {
   // Resumen
   totalVendido: number = 0;
   numeroVentas: number = 0;
-  cambioSemanal: number = 0;
+  productoMasVendido: string = '';
+  cantidadVendida: number = 0;
 
   constructor() { }
 
@@ -63,6 +64,10 @@ export class RegistrosVentasComponent implements OnInit {
       this.ventas = res.content;
       this.totalPaginas = res.totalPages;
     })
+    this.reporteService.getProductoMasVendidoMes().subscribe(res => {
+      this.productoMasVendido = res.nombreProducto;
+      this.cantidadVendida = res.cantidadVendida;
+    });
   }
 
   limpiarFiltros(): void {
@@ -106,46 +111,46 @@ export class RegistrosVentasComponent implements OnInit {
   }
 
   aplicarFiltros() {
-      if (this.filtroDesde && this.filtroHasta) {
-        const desde = new Date(this.filtroDesde);
-        const hasta = new Date(this.filtroHasta);
-  
-        if (desde > hasta) {
-          Swal.fire({
-            icon: 'error',
-            title: 'Rango de fechas inválido',
-            text: 'La fecha de inicio no puede ser posterior a la fecha fin.',
-            confirmButtonColor: '#d33'
-          });
-          return;
-        }
+    if (this.filtroDesde && this.filtroHasta) {
+      const desde = new Date(this.filtroDesde);
+      const hasta = new Date(this.filtroHasta);
+
+      if (desde > hasta) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Rango de fechas inválido',
+          text: 'La fecha de inicio no puede ser posterior a la fecha fin.',
+          confirmButtonColor: '#d33'
+        });
+        return;
       }
-      debugger;
-      this.ventaService.filtrarVentas(
-        this.filtroNombre,
-        this.filtroApellido,
-        this.filtroCliente,
-        this.filtroMedioPago,
-        this.filtroDesde,
-        this.filtroHasta,
-        this.pagina
-      ).subscribe({
-        next: (data) => {
-          this.ventas = data.content.sort((a: { fecha: string | number | Date; }, b: { fecha: string | number | Date; }) =>
-            new Date(b.fecha).getTime() - new Date(a.fecha).getTime()
-          );
-          this.totalPaginas = data.totalPages;
-        },
-        error: (err) => {
-          Swal.fire({
-            icon: 'error',
-            title: 'Error al filtrar',
-            text: err.error || 'Ocurrió un error al filtrar los movimientos.',
-            confirmButtonColor: '#d33'
-          });
-        }
-      });
     }
+    debugger;
+    this.ventaService.filtrarVentas(
+      this.filtroNombre,
+      this.filtroApellido,
+      this.filtroCliente,
+      this.filtroMedioPago,
+      this.filtroDesde,
+      this.filtroHasta,
+      this.pagina
+    ).subscribe({
+      next: (data) => {
+        this.ventas = data.content.sort((a: { fecha: string | number | Date; }, b: { fecha: string | number | Date; }) =>
+          new Date(b.fecha).getTime() - new Date(a.fecha).getTime()
+        );
+        this.totalPaginas = data.totalPages;
+      },
+      error: (err) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al filtrar',
+          text: err.error || 'Ocurrió un error al filtrar los movimientos.',
+          confirmButtonColor: '#d33'
+        });
+      }
+    });
+  }
   avanzarPagina() {
     if (this.pagina >= this.totalPaginas - 1) return;
     this.pagina++;

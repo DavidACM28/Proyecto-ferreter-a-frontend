@@ -1,2 +1,207 @@
-<h2 class="text-2xl font-bold">⚙️ Configuración</h2>
-<p class="text-gray-600">Parámetros del sistema y gestión de usuarios.</p>
+<div class="p-6 bg-gray-100 min-h-screen space-y-8">
+
+  <!-- 🧍 Gestión de usuarios -->
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-200">
+    <div class="flex items-center justify-between p-5 border-b border-gray-200">
+      <h2 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
+        <i class="ri-user-settings-line text-blue-600 text-xl"></i>
+        Gestión de Usuarios
+      </h2>
+      <button (click)="abrirModalCrear()"
+        class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition font-medium text-sm flex items-center gap-2">
+        <i class="ri-user-add-line"></i>
+        Nuevo Usuario
+      </button>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm text-gray-700">
+        <thead class="bg-gray-50 text-gray-600 uppercase text-xs">
+          <tr>
+            <th class="px-6 py-3 text-left">ID</th>
+            <th class="px-6 py-3 text-left">Nombre</th>
+            <th class="px-6 py-3 text-left">Usuario</th>
+            <th class="px-6 py-3 text-left">Rol</th>
+            <th class="px-6 py-3 text-left">Estado</th>
+            <th class="px-6 py-3 text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+
+          <tr class="hover:bg-gray-50 transition" *ngFor="let trabajador of trabajadores">
+            <td class="px-6 py-3">{{trabajador.idTrabajador}}</td>
+            <td class="px-6 py-3 font-medium">{{trabajador.nombreTrabajador}} {{trabajador.apellidoTrabajador}}</td>
+            <td class="px-6 py-3">{{trabajador.usuarioTrabajador}}</td>
+            <td class="px-6 py-3">{{trabajador.tipoTrabajador?.descripcionTipoTrabajador}}</td>
+            <td class="px-6 py-3 text-green-600 font-medium" *ngIf="trabajador.estadoTrabajador">Activo</td>
+            <td class="px-6 py-3 text-red-600 font-medium" *ngIf="!trabajador.estadoTrabajador">Inactivo</td>
+            <td class="px-6 py-3 text-center space-x-2 flex justify-center">
+              <button (click)="abrirModalEditar(trabajador)"
+                class="px-3 py-1.5 bg-blue-100 text-blue-700 hover:bg-blue-200 rounded-lg flex items-center justify-center gap-1 inline-flex transition text-sm font-medium">
+                <i class="ri-edit-line"></i> Editar
+              </button>
+              <button *ngIf="trabajador.estadoTrabajador" (click)="deshabilitarTrabajador(trabajador.idTrabajador)"
+                class="px-3 py-1.5 bg-red-100 text-red-700 hover:bg-red-200 rounded-lg flex items-center justify-center gap-1 inline-flex transition text-sm font-medium">
+                <i class="ri-delete-bin-line"></i> Deshabilitar
+              </button>
+              <button *ngIf="!trabajador.estadoTrabajador" (click)="habilitarTrabajador(trabajador.idTrabajador)"
+                class="px-3 py-1.5 bg-green-100 text-green-700 hover:bg-green-200 rounded-lg flex items-center justify-center gap-1 inline-flex transition text-sm font-medium">
+                <i class="ri-refresh-line"></i> Habilitar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 🏷 Categorías -->
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-200">
+    <div class="flex items-center justify-between p-5 border-b border-gray-200">
+      <h2 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
+        <i class="ri-price-tag-3-line text-yellow-500 text-xl"></i>
+        Categorías
+      </h2>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm text-gray-700">
+        <thead class="bg-gray-50 text-gray-600 uppercase text-xs">
+          <tr>
+            <th class="px-6 py-3 text-left">ID</th>
+            <th class="px-6 py-3 text-left">Nombre</th>
+            <th class="px-6 py-3 text-left">Estado</th>
+            <th class="px-6 py-3 text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          <tr class="hover:bg-gray-50 transition" *ngFor="let categoria of categorias">
+            <td class="px-6 py-3">{{categoria.idCategoria}}</td>
+            <td class="px-6 py-3 font-medium">{{categoria.nombreCategoria}}</td>
+            <td *ngIf="categoria.estadoCategoria == false" class="px-6 py-3 text-red-600 font-medium">Deshabilitada</td>
+            <td *ngIf="categoria.estadoCategoria == true" class="px-6 py-3 text-green-600 font-medium">Habilitada</td>
+            <td class="px-6 py-3 text-center">
+              <button *ngIf="categoria.estadoCategoria==false" (click)="habilitarCategoria(categoria.idCategoria)"
+                class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition text-sm flex items-center gap-1 mx-auto">
+                <i class="ri-refresh-line"></i> Habilitar
+              </button>
+              <button *ngIf="categoria.estadoCategoria==true" (click)="deshabilitarCategoria(categoria.idCategoria)"
+                class="px-3 py-1 bg-red-600 hover:bg-red-800 text-white rounded-lg transition text-sm flex items-center gap-1 mx-auto">
+                <i class="ri-refresh-line"></i> Deshabilitar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 📦 Productos deshabilitados -->
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-200">
+    <div class="flex items-center justify-between p-5 border-b border-gray-200">
+      <h2 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
+        <i class="ri-box-3-line text-purple-600 text-xl"></i>
+        Productos Deshabilitados
+      </h2>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm text-gray-700">
+        <thead class="bg-gray-50 text-gray-600 uppercase text-xs">
+          <tr>
+            <th class="px-6 py-3 text-left">ID</th>
+            <th class="px-6 py-3 text-left">Nombre</th>
+            <th class="px-6 py-3 text-left">Categoría</th>
+            <th class="px-6 py-3 text-left">Stock</th>
+            <th class="px-6 py-3 text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          <tr class="hover:bg-gray-50 transition" *ngFor="let producto of productos">
+            <td class="px-6 py-3">{{producto.idProducto}}</td>
+            <td class="px-6 py-3 font-medium">{{producto.nombreProducto}}</td>
+            <td class="px-6 py-3">{{producto.categoria?.nombreCategoria ?? 'Sin categoría'}}</td>
+            <td class="px-6 py-3">{{producto.cantidadProducto}}</td>
+            <td class="px-6 py-3 text-center">
+              <button
+                class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition text-sm flex items-center gap-1 mx-auto"
+                (click)="habilitarProducto(producto.idProducto)">
+                <i class="ri-refresh-line"></i> Habilitar
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="productos.length === 0">
+            <td colspan="8" class="text-center text-gray-500 py-4">No se encontraron productos deshabilitados.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+<!-- 🪟 Modal Crear Trabajador -->
+<div *ngIf="mostrarModalCrear" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 backdrop-blur-sm">
+  <div class="bg-white rounded-2xl shadow-lg w-full max-w-lg p-6 relative">
+    <button (click)="cerrarModalCrear()"
+      class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-2xl font-bold">
+      ×
+    </button>
+    <h2 class="text-xl font-semibold mb-4 text-gray-800 text-center">👤 Crear Trabajador</h2>
+    <div class="space-y-3">
+      <input type="text" placeholder="Nombre" [(ngModel)]="nombreTrabajador"
+        class="w-full border border-gray-300 rounded-lg px-3 py-2" />
+      <input type="text" placeholder="Apellido" [(ngModel)]="apellidoTrabajador"
+        class="w-full border border-gray-300 rounded-lg px-3 py-2" />
+      <input type="text" placeholder="Usuario" [(ngModel)]="usuarioTrabajador"
+        class="w-full border border-gray-300 rounded-lg px-3 py-2" />
+      <input type="password" placeholder="Contraseña" [(ngModel)]="contrasenaTrabajador"
+        class="w-full border border-gray-300 rounded-lg px-3 py-2" />
+      <input type="password" placeholder="Confirmar contraseña" [(ngModel)]="confirmarContrasena"
+        class="w-full border border-gray-300 rounded-lg px-3 py-2" />
+      <select [(ngModel)]="tipoTrabajador" class="w-full border border-gray-300 rounded-lg px-3 py-2">
+        <option value="" disabled selected>Seleccionar tipo de trabajador</option>
+        <option *ngFor="let tipo of tiposTrabajador" [value]="tipo.idTipoTrabajador">
+          {{ tipo.descripcionTipoTrabajador }}
+        </option>
+      </select>
+    </div>
+    <div class="flex justify-end mt-6 gap-3">
+      <button (click)="cerrarModalCrear()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg">Cancelar</button>
+      <button (click)="crearTrabajador()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">Crear</button>
+    </div>
+  </div>
+</div>
+
+<!-- 🪟 Modal Editar Trabajador -->
+<div *ngIf="mostrarModalEditar"
+  class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 backdrop-blur-sm">
+  <div class="bg-white rounded-2xl shadow-lg w-full max-w-lg p-6 relative">
+    <button (click)="cerrarModalEditar()"
+      class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-2xl font-bold">
+      ×
+    </button>
+    <h2 class="text-xl font-semibold mb-4 text-gray-800 text-center">✏️ Editar Trabajador</h2>
+    <div class="space-y-3">
+      <input type="text" placeholder="Nombre" [(ngModel)]="trabajadorEditar!.nombreTrabajador"
+        class="w-full border border-gray-300 rounded-lg px-3 py-2" />
+      <input type="text" placeholder="Apellido" [(ngModel)]="trabajadorEditar!.apellidoTrabajador"
+        class="w-full border border-gray-300 rounded-lg px-3 py-2" />
+      <input type="text" placeholder="Usuario" [(ngModel)]="trabajadorEditar!.usuarioTrabajador"
+        class="w-full border border-gray-300 rounded-lg px-3 py-2" />
+      <input type="password" placeholder="Nueva contraseña (opcional)" [(ngModel)]="contrasenaTrabajador"
+        class="w-full border border-gray-300 rounded-lg px-3 py-2" />
+      <select [(ngModel)]="trabajadorEditar!.tipoTrabajador!.idTipoTrabajador"
+        class="w-full border border-gray-300 rounded-lg px-3 py-2">
+        <option value="" disabled selected>Seleccionar tipo de trabajador</option>
+        <option *ngFor="let tipo of tiposTrabajador" [value]="tipo.idTipoTrabajador">
+          {{ tipo.descripcionTipoTrabajador }}
+        </option>
+      </select>
+    </div>
+    <div class="flex justify-end mt-6 gap-3">
+      <button (click)="cerrarModalEditar()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg">Cancelar</button>
+      <button (click)="guardarTrabajador()" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">Guardar</button>
+    </div>
+  </div>
+</div>

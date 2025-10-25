@@ -8,30 +8,18 @@
         <label for="buscarProductos">Buscar producto</label>
         <div class="buscador__wrap">
           <span class="buscador__icon material-symbols-rounded" aria-hidden="true">search</span>
-          <input
-            id="buscarProductos"
-            type="text"
-            [(ngModel)]="busqueda"
-            (input)="buscarProducto()"
-            placeholder="Nombre de producto…"
-          />
+          <input id="buscarProductos" type="text" [(ngModel)]="busqueda" (input)="buscarProducto()"
+            placeholder="Nombre de producto…" />
           <span class="total-badge">{{ total }}</span>
         </div>
       </div>
 
       <!-- Botón Nuevo Producto -->
       <div class="nuevo">
-        <button
-          (click)="nuevoProducto()"
-          class="btn-nuevo"
-          type="button">
+        <button (click)="nuevoProducto()" class="btn-nuevo" type="button">
           Nuevo Producto
         </button>
-        <button
-          (click)="nuevaCategoria()"
-          class="btn-nuevo"
-          type="button"
-          style="margin-left: 10px;">
+        <button (click)="nuevaCategoria()" class="btn-nuevo" type="button" style="margin-left: 10px;">
           Nueva catagoría
         </button>
       </div>
@@ -39,24 +27,21 @@
   </div>
 
   <!-- 🅱️ Categorías (chips) -->
-<div class="filtros-card chips-card">
-  <div class="chips">
-    <!-- Chip "Todos" -->
-    <button
-      (click)="seleccionarCategoria('Todos')"
-      [ngClass]="categoriaSeleccionada === 'Todos' ? 'chip chip--activa' : 'chip'">
-      Todos
-    </button>
+  <div class="filtros-card chips-card">
+    <div class="chips">
+      <!-- Chip "Todos" -->
+      <button (click)="seleccionarCategoria('Todos')"
+        [ngClass]="categoriaSeleccionada === 'Todos' ? 'chip chip--activa' : 'chip'">
+        Todos
+      </button>
 
-    <!-- Chips dinámicas -->
-    <button
-      *ngFor="let cat of categorias"
-      (click)="seleccionarCategoria(cat.nombreCategoria)"
-      [ngClass]="cat.nombreCategoria === categoriaSeleccionada ? 'chip chip--activa' : 'chip'">
-      {{ cat.nombreCategoria }}
-    </button>
+      <!-- Chips dinámicas -->
+      <button *ngFor="let cat of categorias" (click)="seleccionarCategoria(cat.nombreCategoria)"
+        [ngClass]="cat.nombreCategoria === categoriaSeleccionada ? 'chip chip--activa' : 'chip'">
+        {{ cat.nombreCategoria }}
+      </button>
+    </div>
   </div>
-</div>
 
 
   <!-- 📋 Tabla de productos -->
@@ -65,7 +50,7 @@
     <table>
       <thead>
         <tr>
-          <th >Código</th>
+          <th>Código</th>
           <th>Nombre</th>
           <th>Categoría</th>
           <th>Precio (S/)</th>
@@ -81,10 +66,7 @@
           <td>S/{{ producto.precioProducto }}</td>
           <td>{{ producto.cantidadProducto }}</td>
           <td class="acciones">
-            <button
-              (click)="editarProducto(producto)"
-              type="button"
-              class="btn-editar">
+            <button (click)="editarProducto(producto)" type="button" class="btn-editar">
               Editar
             </button>
           </td>
@@ -99,13 +81,7 @@
 </div>
 
 
-<app-producto-modal
-  *ngIf="mostrarModal"
-  [producto]="productoEditar"
-  [tipo]="tipo"
-  (onGuardar)="guardarProducto()"
-  (onCrear)="crearProducto()"
-  (onCrearCategoria)="crearCategoria()"
-  (onCancelar)="cancelarModal()"
+<app-producto-modal *ngIf="mostrarModal" [producto]="productoEditar" [tipo]="tipo" (onGuardar)="guardarProducto()"
+  (onCrear)="crearProducto()" (onCrearCategoria)="crearCategoria()" (onCancelar)="cancelarModal()"
   (onEliminar)="eliminarProducto($event)">
 </app-producto-modal>

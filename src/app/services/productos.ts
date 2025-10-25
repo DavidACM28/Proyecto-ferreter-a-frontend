@@ -13,19 +13,31 @@ export class Productos {
 
   constructor() { }
 
-  obtenerProductos(){
+  obtenerProductos() {
     return this.http.get<productosResponse[]>(this.baseUrl + 'producto/productos');
   }
 
-  obtenerMasVendidos(){
+  obtenerProductosDeshabilitados() {
+    return this.http.get<productosResponse[]>(this.baseUrl + 'producto/productosDeshabilitados');
+  }
+
+  obtenerMasVendidos() {
     return this.http.get<productosResponse[]>(this.baseUrl + 'producto/masVendidos');
   }
 
-  nuevoProducto(producto: productoBody){
+  nuevoProducto(producto: productoBody) {
     return this.http.post<productosResponse>(this.baseUrl + 'producto/nuevoProducto', producto);
   }
 
-  actualizarProducto(producto: productosResponse){
-    return this.http.post(this.baseUrl + 'producto/actualizar', producto, {responseType: 'text'});
+  actualizarProducto(producto: productosResponse) {
+    return this.http.post(this.baseUrl + 'producto/actualizar', producto, { responseType: 'text' });
+  }
+
+  habilitarProducto(idProducto: number) {
+    return this.http.post(this.baseUrl + 'producto/habilitar/' + idProducto, null, { responseType: 'text' });
+  }
+
+  deshabilitarProducto(idProducto: number) {
+    return this.http.post(this.baseUrl + 'producto/deshabilitar/' + idProducto, null, { responseType: 'text' });
   }
 }

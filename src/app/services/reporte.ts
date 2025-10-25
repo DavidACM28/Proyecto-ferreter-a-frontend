@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class Reporte {
   private base = 'http://localhost:8080/api/reportes';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   obtenerResumen(): Observable<any> {
     return this.http.get(`${this.base}/resumen`);
@@ -22,7 +22,11 @@ export class Reporte {
     return this.http.get<any[]>(`${this.base}/ventas-por-mes?meses=${meses}`);
   }
 
-    obtenerVentasPorRango(inicio: string, fin: string) {
+  obtenerVentasPorRango(inicio: string, fin: string) {
     return this.http.get<any>(`${this.base}/ventas-por-rango?inicio=${inicio}&fin=${fin}`);
+  }
+
+  getProductoMasVendidoMes() {
+    return this.http.get<any>(`http://localhost:8080/venta/producto-mas-vendido-mes`);
   }
 }

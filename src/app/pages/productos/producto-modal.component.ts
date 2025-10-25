@@ -58,7 +58,7 @@ export class ProductoModalComponent {
             this.categorias = res;
         });
     }
- 
+
     guardarProducto() {
         var categoria: categoriasResponse = this.categorias.find(c => c.nombreCategoria === this.categoria)!;
         var producto: productosResponse = {
@@ -81,14 +81,14 @@ export class ProductoModalComponent {
             }
 
             var trabajador: Trabajador = {
-                  idTrabajador: parseInt(localStorage.getItem('idTrabajador')!),
-                  tipoTrabajador: null,
-                  nombreTrabajador: null,
-                  apellidoTrabajador: null,
-                  usuarioTrabajador: null,
-                  contraseñaTrabajador: null,
-                  estadoTrabajador: null
-                }
+                idTrabajador: parseInt(localStorage.getItem('idTrabajador')!),
+                tipoTrabajador: null,
+                nombreTrabajador: null,
+                apellidoTrabajador: null,
+                usuarioTrabajador: null,
+                contraseñaTrabajador: null,
+                estadoTrabajador: null
+            }
 
             var auditoria: AuditoriaBody = {
                 producto: producto,
@@ -100,13 +100,13 @@ export class ProductoModalComponent {
             }
 
             this.producto = producto;
-            this.productosService.actualizarProducto(producto).subscribe(()=>{
-                this.ventasService.crearAuditoria(auditoria).subscribe(() =>{
+            this.productosService.actualizarProducto(producto).subscribe(() => {
+                this.ventasService.crearAuditoria(auditoria).subscribe(() => {
                     this.onGuardar.emit();
                 });
             });
         }
-        else{
+        else {
             this.producto = producto;
             this.productosService.actualizarProducto(producto).subscribe(() => {
                 this.onGuardar.emit();
@@ -117,14 +117,14 @@ export class ProductoModalComponent {
     agregarProducto() {
         var categoria: categoriasResponse = this.categorias.find(c => c.nombreCategoria === this.categoria)!;
         var trabajador: Trabajador = {
-                  idTrabajador: parseInt(localStorage.getItem('idTrabajador')!),
-                  tipoTrabajador: null,
-                  nombreTrabajador: null,
-                  apellidoTrabajador: null,
-                  usuarioTrabajador: null,
-                  contraseñaTrabajador: null,
-                  estadoTrabajador: null
-                }
+            idTrabajador: parseInt(localStorage.getItem('idTrabajador')!),
+            tipoTrabajador: null,
+            nombreTrabajador: null,
+            apellidoTrabajador: null,
+            usuarioTrabajador: null,
+            contraseñaTrabajador: null,
+            estadoTrabajador: null
+        }
         var producto: productoBody = {
             categoria: categoria,
             nombreProducto: this.nombre,
@@ -142,7 +142,7 @@ export class ProductoModalComponent {
                 trabajador: trabajador,
                 referencia: 'Nuevo producto'
             }
-            this.ventasService.crearAuditoria(auditoria).subscribe(() =>{
+            this.ventasService.crearAuditoria(auditoria).subscribe(() => {
                 this.onCrear.emit();
             });
         });
@@ -154,14 +154,17 @@ export class ProductoModalComponent {
     }
 
     eliminarProducto() {
-        
+        this.productosService.deshabilitarProducto(this.producto!.idProducto).subscribe(() => {
+            this.producto = null;
+            this.onEliminar.emit();
+        });
     }
     compararCategoria(c1: string, c2: string): boolean {
         return c1 === c2;
     }
-    
+
     compararStock(): boolean {
-        if(!this.producto){
+        if (!this.producto) {
             return false;
         }
         return this.stock != this.stockAnterior;

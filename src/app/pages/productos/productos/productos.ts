@@ -20,7 +20,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./productos.scss']
 })
 export class ProductosComponent implements OnInit {
-  
+
   productoService = inject(Productos);
   categoriasService = inject(Categorias);
   productos: productosResponse[] = [];
@@ -34,7 +34,7 @@ export class ProductosComponent implements OnInit {
   mostrarModal = false;
   productoEditar?: productosResponse | null;
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
 
@@ -51,7 +51,7 @@ export class ProductosComponent implements OnInit {
 
   // 🔍 Filtrado general
   filtrarProductos() {
-    if(this.categoriaSeleccionada === 'Todos' && this.busqueda === ''){
+    if (this.categoriaSeleccionada === 'Todos' && this.busqueda === '') {
       this.productosFiltrados = this.productos;
       this.total = this.productosFiltrados.length;
       return;
@@ -83,6 +83,7 @@ export class ProductosComponent implements OnInit {
   editarProducto(producto: productosResponse) {
     this.productoEditar = producto;
     this.mostrarModal = true;
+    this.tipo = true;
   }
 
   nuevoProducto() {
@@ -126,7 +127,14 @@ export class ProductosComponent implements OnInit {
   }
 
   eliminarProducto(codigo: string) {
-
+    this.mostrarModal = false;
+    Swal.fire({
+      title: 'Producto Deshabilitado',
+      text: 'Producto deshabilitado con éxito',
+      icon: 'success',
+      confirmButtonText: 'Aceptar',
+    })
+    this.ngOnInit();
   }
 
   cancelarModal() {
