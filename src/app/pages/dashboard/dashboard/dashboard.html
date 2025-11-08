@@ -63,14 +63,14 @@
     </div>
 
     <div *ngIf="ventasRango?.detalleVentas?.length" class="mt-6">
-      <h4 class="font-semibold mb-3 text-md">📊 Gráfico de ventas en el rango</h4>
+      <h4 class="font-semibold mb-3 text-md">Gráfico de ventas en el rango</h4>
       <canvas baseChart [data]="ventasRangoData" [options]="ventasRangoOptions" chartType="line"></canvas>
     </div>
   </div>
 
   <!-- Productos por categoría -->
   <div class="mt-10 bg-white rounded-2xl p-6 shadow">
-    <h3 class="font-semibold mb-4 text-lg">🔥 Productos más vendidos por categoría</h3>
+    <h3 class="font-semibold mb-4 text-lg">Productos más vendidos por categoría</h3>
     <canvas baseChart [data]="topCategoriaData" [options]="topCategoriaOptions" chartType="bar"></canvas>
   </div>
 </div>

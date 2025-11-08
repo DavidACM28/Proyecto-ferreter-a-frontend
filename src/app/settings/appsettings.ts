@@ -1,3 +1,3 @@
 export const appsettings = {
-    apiUrl: "http://localhost:8080/"
+    apiUrl: "https://proyecto-ferreter-a-backend.onrender.com/"
 }

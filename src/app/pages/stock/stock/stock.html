@@ -94,7 +94,7 @@
           <td class="num">{{prod.cantidadProducto}}</td>
           <td class="num">10</td>
           <td class="num"> S/.{{prod.precioProducto}}</td>
-          <td *ngIf="prod.cantidadProducto! > 10" style="text-align: center;">
+          <td *ngIf="prod.cantidadProducto! >= 10" style="text-align: center;">
             <span class="estado ok">Activo</span>
           </td>
           <td *ngIf="prod.cantidadProducto! < 10 && prod.cantidadProducto! > 0" style="text-align: center;">
@@ -222,7 +222,7 @@
     class="bg-white rounded-2xl shadow-lg w-full max-w-3xl p-6 relative animate-fade-in" 
     (click)="$event.stopPropagation()"
   >
-    <h2 class="text-2xl font-semibold text-center mb-4">🤖 Recomendaciones de Compra (IA)</h2>
+    <h2 class="text-2xl font-semibold text-center mb-4">Recomendaciones de Compra</h2>
 
     <div *ngIf="loadingIA" class="text-center py-6 text-gray-600">Cargando predicciones...</div>
 

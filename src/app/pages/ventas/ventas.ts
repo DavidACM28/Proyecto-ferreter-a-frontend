@@ -110,6 +110,14 @@ export class VentasComponent implements OnInit {
 
   anadirProducto(prod: productosResponse): void {
     const item = this.carrito.get(prod.idProducto);
+    if (item && item.cantidad == prod.cantidadProducto){
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se puede superar el stock de este producto.",
+      });
+      return;
+    } 
     if (item) {
       item.cantidad++;
     } else {
@@ -137,12 +145,25 @@ export class VentasComponent implements OnInit {
 
   incrementarCantidad(prod:productosResponse): void {
     const item = this.carrito.get(prod.idProducto)!;
+    if (item.cantidad == prod.cantidadProducto){
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se puede superar el stock de este producto.",
+      });
+      return;
+    }
     item.cantidad++
     this.guardarCarrito();
   }
 
   decrementarCantidad(prod:productosResponse): void {
     const item = this.carrito.get(prod.idProducto)!;
+    if (item.cantidad == 1){
+      this.carrito.delete(prod.idProducto);
+      this.guardarCarrito();
+      return;
+    }
     item.cantidad--
     this.guardarCarrito();
   }

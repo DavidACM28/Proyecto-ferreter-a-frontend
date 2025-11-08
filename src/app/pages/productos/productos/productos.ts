@@ -37,7 +37,7 @@ export class ProductosComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-
+    this.categoriaSeleccionada = 'Todos'
     this.productoService.obtenerProductos().subscribe(data => {
       this.productos = data;
       this.productosFiltrados = data;

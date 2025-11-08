@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit {
   productoSeleccionado: string = '';
   categoriaSeleccionada: string = '';
 
-  private apiUrl = 'http://localhost:8080/api/dashboard';
+  private apiUrl = 'https://proyecto-ferreter-a-backend.onrender.com/api/dashboard';
 
   constructor(private reporteService: Reporte, private http: HttpClient) {}
 

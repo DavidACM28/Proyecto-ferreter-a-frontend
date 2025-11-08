@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class Reporte {
-  private base = 'http://localhost:8080/api/reportes';
+  private base = 'https://proyecto-ferreter-a-backend.onrender.com/api/reportes';
 
   constructor(private http: HttpClient) { }
 
@@ -27,6 +27,6 @@ export class Reporte {
   }
 
   getProductoMasVendidoMes() {
-    return this.http.get<any>(`http://localhost:8080/venta/producto-mas-vendido-mes`);
+    return this.http.get<any>(`https://proyecto-ferreter-a-backend.onrender.com/venta/producto-mas-vendido-mes`);
   }
 }
