@@ -69,7 +69,7 @@ export class StockComponent implements OnInit {
   obtenerPrediccionesIA() {
     this.mostrarModalIA = true;
     this.loadingIA = true;
-    this.http.get<any[]>('http://localhost:8080/prediccion/compras').subscribe({
+    this.http.get<any[]>('https://proyecto-ferreter-a-backend.onrender.com/prediccion/compras').subscribe({
       next: (data) => {
         this.prediccionesIA = data;
         this.loadingIA = false;
